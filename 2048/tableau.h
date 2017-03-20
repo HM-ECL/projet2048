@@ -1,7 +1,7 @@
 #ifndef TABLEAU_H
 #define TABLEAU_H
 
-//#include <QObject>
+#include <QObject>
 
 int rand_a_b(int a,int b) ;
 
@@ -29,7 +29,7 @@ public:
     int read(int x,int y) ;
 
 signals:
-    cptChanged() ;
+    void cptChanged() ;
 
 //public slots:
 

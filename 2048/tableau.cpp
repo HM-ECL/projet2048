@@ -16,7 +16,7 @@ tableau::tableau(QObject *parent) : QObject(parent)
     score = 0 ;
 }
 
-
+/*
 void tableau::Init(){
     int a=rand_a_b(0,16);
     int b=rand_a_b(0,16);
@@ -31,7 +31,7 @@ void tableau::Init(){
     M[yb][b%4] = valb;
     score = 0 ;
 }
-
+*/
 
 
 
@@ -73,7 +73,7 @@ void tableau::gauche(){
               }
         }
     }
-   // cptChanged();
+   cptChanged();
         imp() ;
         cout<<endl;
     nvelle_case();
@@ -108,7 +108,7 @@ void tableau::droite(){
               }
         }
     }
-   // cptChanged();
+   cptChanged();
         imp() ;
         cout<<endl;
     nvelle_case();
@@ -144,7 +144,7 @@ void tableau::haut(){
               }
         }
     }
-   // cptChanged();
+    cptChanged();
         imp() ;
         cout<<endl;
     nvelle_case();
@@ -179,7 +179,7 @@ void tableau::bas(){
               }
         }
     }
-   // cptChanged();
+   cptChanged();
         imp() ;
         cout<<endl;
     nvelle_case();

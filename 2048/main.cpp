@@ -2,12 +2,18 @@
 //#include <QQmlApplicationEngine>
 #include <tableau.cpp>
 #include <iostream>
+#include <QGuiApplication>
+#include <QQmlApplicationEngine>
+#include <QtQml>
+
+#include <tableau.h>
+
 
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
 
-    tableau maintab
+    tableau maintab ;
 
     QQmlApplicationEngine engine;
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));

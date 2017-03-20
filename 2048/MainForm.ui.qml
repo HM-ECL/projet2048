@@ -540,7 +540,7 @@ Rectangle {
         horizontalAlignment: Text.AlignHCenter
         font.pixelSize: 20
     }
-
+/*
     Keys.onPressed: {
       switch (event.key) {
         case Qt.Key_Up:
@@ -557,5 +557,5 @@ Rectangle {
           break;
       }
     }
-
+*/
 }
