@@ -540,4 +540,22 @@ Rectangle {
         horizontalAlignment: Text.AlignHCenter
         font.pixelSize: 20
     }
+
+    Keys.onPressed: {
+      switch (event.key) {
+        case Qt.Key_Up:
+          vueObjetCpt.haut();
+          break;
+        case Qt.Key_Down:
+          vueObjetCpt.bas();
+          break;
+        case Qt.Key_Right:
+          vueObjetCpt.droite();
+          break;
+        case Qt.Key_Left:
+          vueObjetCpt.gauche();
+          break;
+      }
+    }
+
 }
