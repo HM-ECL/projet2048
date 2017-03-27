@@ -15,7 +15,6 @@ int main(int argc, char *argv[])
 
     tableau maintab ;
     maintab.Init();
-    maintab.imp();
 
     QQmlApplicationEngine engine;
 

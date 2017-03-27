@@ -13,7 +13,6 @@ Rectangle {
         width: 600
         height: 800
 
-
         Rectangle {
             id: grille
             x: 161
@@ -31,24 +30,24 @@ Rectangle {
             focus: true
 
             Keys.onPressed: {
-              switch (event.key) {
+                switch (event.key) {
                 case Qt.Key_Up:
-                  toto.haut()
-                  console.log(toto.liste);
-                  break;
+                    toto.haut()
+                    //console.log(toto.liste);
+                    break;
                 case Qt.Key_Down:
-                  toto.bas();
-                  console.log(toto.liste);
-                  break;
+                    toto.bas();
+                    //console.log(toto.liste);
+                    break;
                 case Qt.Key_Right:
-                    toto.droite();
-                    console.log(toto.liste);
-                    break;
+                     toto.droite();
+                     //console.log(toto.liste);
+                     break;
                 case Qt.Key_Left:
-                    toto.gauche();
-                    console.log(toto.liste);
-                    break;
-              }
+                     toto.gauche();
+                    //console.log(toto.liste);
+                     break;
+                }
             }
 
             Rectangle {
@@ -62,7 +61,7 @@ Rectangle {
                 anchors.leftMargin: 0
                 anchors.topMargin: 0
                 border.width: 2
-                Text{
+                Text {
                     id: g0
                     x: 12
                     y: 40
@@ -93,7 +92,7 @@ Rectangle {
                 anchors.leftMargin: 100
                 anchors.topMargin: 0
                 border.width: 2
-                Text{
+                Text {
                     id: g1
                     x: 12
                     y: 40
@@ -124,7 +123,7 @@ Rectangle {
                 border.width: 2
                 anchors.right: parent.right
                 anchors.rightMargin: 100
-                Text{
+                Text {
                     id: g2
                     x: 12
                     y: 40
@@ -155,7 +154,7 @@ Rectangle {
                 border.width: 2
                 anchors.right: parent.right
                 anchors.rightMargin: 0
-                Text{
+                Text {
                     id: g3
                     x: 12
                     y: 40
@@ -185,7 +184,7 @@ Rectangle {
                 anchors.leftMargin: 0
                 anchors.topMargin: 100
                 border.width: 2
-                Text{
+                Text {
                     id: g4
                     x: 12
                     y: 40
@@ -216,7 +215,7 @@ Rectangle {
                 anchors.leftMargin: 100
                 anchors.topMargin: 100
                 border.width: 2
-                Text{
+                Text {
                     id: g5
                     x: 12
                     y: 40
@@ -278,7 +277,7 @@ Rectangle {
                 anchors.leftMargin: 300
                 anchors.topMargin: 100
                 border.width: 2
-                Text{
+                Text {
                     id: g7
                     x: 12
                     y: 40
@@ -309,7 +308,7 @@ Rectangle {
                 anchors.leftMargin: 0
                 anchors.topMargin: 200
                 border.width: 2
-                Text{
+                Text {
                     id: g8
                     x: 12
                     y: 40
@@ -340,7 +339,7 @@ Rectangle {
                 anchors.leftMargin: 100
                 anchors.topMargin: 200
                 border.width: 2
-                Text{
+                Text {
                     id: g9
                     x: 12
                     y: 40
@@ -371,7 +370,7 @@ Rectangle {
                 anchors.leftMargin: 200
                 anchors.topMargin: 200
                 border.width: 2
-                Text{
+                Text {
                     id: g10
                     x: 12
                     y: 40
@@ -433,7 +432,7 @@ Rectangle {
                 anchors.leftMargin: 0
                 anchors.topMargin: 300
                 border.width: 2
-                Text{
+                Text {
                     id: g12
                     x: 12
                     y: 40
@@ -464,7 +463,7 @@ Rectangle {
                 anchors.leftMargin: 100
                 anchors.topMargin: 300
                 border.width: 2
-                Text{
+                Text {
                     id: g13
                     x: 12
                     y: 40
@@ -495,7 +494,7 @@ Rectangle {
                 anchors.leftMargin: 200
                 anchors.topMargin: 300
                 border.width: 2
-                Text{
+                Text {
                     id: g14
                     x: 12
                     y: 40
@@ -526,7 +525,7 @@ Rectangle {
                 anchors.leftMargin: 300
                 anchors.topMargin: 300
                 border.width: 2
-                Text{
+                Text {
                     id: g15
                     x: 12
                     y: 40
@@ -573,18 +572,16 @@ Rectangle {
                 width: 50
                 height: 50
 
+                Image {
+                    id: image1
+                    anchors.fill: parent
+                    source: "reset.png"
+                }
+
                 onClicked: {
                     toto.Init();
                 }
 
-                Image {
-                    id: image
-                    x: 0
-                    y: 0
-                    width: 50
-                    height: 50
-                    source: "reset.jpg"
-                }
             }
         }
 
@@ -608,6 +605,40 @@ Rectangle {
             text: toto.texteperdu
             horizontalAlignment: Text.AlignHCenter
             font.pixelSize: 20
+        }
+
+        Item {
+            id: retour
+            x: 66
+            y: 199
+            width: 54
+            height: 49
+
+            MouseArea {
+                id: mouseArea1
+                anchors.fill: parent
+
+                Image {
+                    id: image
+                    anchors.fill: parent
+                    source: "retour.jpeg"
+                }
+
+                onClicked: {
+                    toto.retour();
+                }
+
+            }
+        }
+
+        Text {
+            id: retours
+            x: 53
+            y: 254
+            width: 87
+            height: 23
+            text: toto.retours
+            font.pixelSize: 12
         }
     }
 }

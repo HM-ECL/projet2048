@@ -4,7 +4,6 @@ QT += qml quick
 CONFIG += c++11
 
 SOURCES += main.cpp \
-    tableau.cpp \
     tableau.cpp
 
 RESOURCES += qml.qrc
@@ -32,5 +31,4 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    tableau.h \
     tableau.h

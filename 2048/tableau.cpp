@@ -9,6 +9,18 @@ using namespace std;
 tableau::tableau(QObject *parent) : QObject(parent)
 {
     M = new int*[4] ;
+    H = new int**[5] ;
+    for(int ind = 0;ind <5 ; ind++) {
+        H[ind] = new int*[4] ;
+        for (int i=0; i<4; i++){
+            H[ind][i] = new int[4] ;
+            for (int j=0; j<4; j++)
+                H[ind][i][j] = ind;
+        }
+    }
+    score_H = new int[5] ;
+
+    ret_dispos = 0 ;
     score = 0 ;
     texte_perdu=' ';
 }
@@ -79,8 +91,9 @@ void tableau::gauche(){
     }
    if(diff==1){
        nvelle_case();
+       decalage() ;
    }
-   if(perdu()==1){
+   if(perdu()){
        texte_perdu="Vous avez perdu";
    }else{
        texte_perdu=" ";
@@ -121,8 +134,9 @@ void tableau::droite(){
     }
    if(diff==1){
         nvelle_case();
+        decalage() ;
    }
-   if(perdu()==1){
+   if(perdu()){
        texte_perdu="Vous avez perdu";
    }else{
        texte_perdu=" ";
@@ -131,89 +145,6 @@ void tableau::droite(){
 }
 
 
-
-
-
-void tableau::haut(){
-    bool diff = false;
-    for (int j=0; j<4; j++){  //ch
-
-        for (int i=1; i<4; i++){ //ch
-             if (M[i][j]!=0){    // sj la case n'est pas vjde :
-                    int decalage =0 ;
-                    if(M[i-1][j] == 0){
-                         diff = true;
-                         while (decalage < i && M[i-decalage-1][j] == 0 ){   // on decale la case dans le sens voulu, iusqu'a ce qu'on rencontre soit le bord, soit un autre entier
-                            M[i-decalage-1][j] = M[i-decalage][j];
-                            M[i-decalage][j] = 0;
-                            decalage++ ;
-                        }
-
-
-                    }
-                    if (i-decalage-1 >= 0) {
-                    if (M[i-decalage][j] == M[i-decalage-1][j] && M[i-decalage][j] !=0 ) {
-                        diff = true;
-                        M[i-decalage-1][j] = 2*M[i-decalage-1][j] ;
-                        M[i-decalage][j] = 0 ;
-                        score = score + M[i-decalage-1][j]  ;
-                    }
-                    }
-              }
-        }
-    }
-    if(diff==1){
-        nvelle_case();
-    }
-    if(perdu()==1){
-        texte_perdu="Vous avez perdu";
-    }else{
-        texte_perdu=" ";
-    }
-    cptChanged();
-}
-
-
-void tableau::bas(){
-    bool diff = false;
-    for (int j=0; j<4; j++){  //ch
-
-        for (int i=2; i>-1; i--){ //ch
-            if (M[i][j]!=0){    // sj la case n'est pas vjde :
-
-                    int decalage =0 ;
-                    if(M[i+1][j] == 0){
-                        diff = true;
-                         while (decalage < 4-i-1 && M[i+decalage+1][j] == 0 ){   // on decale la case dans le sens voulu, iusqu'a ce qu'on rencontre sojt le bord, sojt un autre entjer
-                             M[i+decalage+1][j] = M[i+decalage][j];
-                            M[i+decalage][j] = 0;
-                            decalage++ ;
-                        }
-
-
-                    }
-
-                    if (i+decalage+1 <= 3) {
-                    if (M[i+decalage][j] == M[i+decalage+1][j] && M[i+decalage][j] !=0 ) {
-                        diff = true;
-                        M[i+decalage+1][j] = 2*M[i+decalage+1][j] ;
-                        M[i+decalage][j] = 0 ;
-                        score = score + M[i+decalage+1][j]   ;
-                    }
-                    }
-              }
-        }
-    }
-   if(diff==1){
-        nvelle_case();
-   }
-   if(perdu()==1){
-       texte_perdu="Vous avez perdu";
-   }else{
-       texte_perdu=" ";
-   }
-   cptChanged();
-}
 
 bool tableau::perdu(){
     bool interieur=false;
@@ -293,6 +224,92 @@ bool tableau::perdu(){
 }
 
 
+void tableau::haut(){
+    bool diff = false;
+    for (int j=0; j<4; j++){  //ch
+
+        for (int i=1; i<4; i++){ //ch
+             if (M[i][j]!=0){    // sj la case n'est pas vjde :
+                    int decalage =0 ;
+                    if(M[i-1][j] == 0){
+                         diff = true;
+                         while (decalage < i && M[i-decalage-1][j] == 0 ){   // on decale la case dans le sens voulu, iusqu'a ce qu'on rencontre soit le bord, soit un autre entier
+                            M[i-decalage-1][j] = M[i-decalage][j];
+                            M[i-decalage][j] = 0;
+                            decalage++ ;
+                        }
+
+
+                    }
+                    if (i-decalage-1 >= 0) {
+                    if (M[i-decalage][j] == M[i-decalage-1][j] && M[i-decalage][j] !=0 ) {
+                        diff = true;
+                        M[i-decalage-1][j] = 2*M[i-decalage-1][j] ;
+                        M[i-decalage][j] = 0 ;
+                        score = score + M[i-decalage-1][j]  ;
+                    }
+                    }
+              }
+        }
+    }
+    if(diff==1){
+        nvelle_case();
+        decalage() ;
+    }
+
+    if(perdu()){
+        texte_perdu="Vous avez perdu";
+    }else{
+        texte_perdu=" ";
+    }
+    cptChanged();
+}
+
+
+void tableau::bas(){
+    bool diff = false;
+    for (int j=0; j<4; j++){  //ch
+
+        for (int i=2; i>-1; i--){ //ch
+            if (M[i][j]!=0){    // sj la case n'est pas vjde :
+
+                    int decalage =0 ;
+                    if(M[i+1][j] == 0){
+                        diff = true;
+                         while (decalage < 4-i-1 && M[i+decalage+1][j] == 0 ){   // on decale la case dans le sens voulu, iusqu'a ce qu'on rencontre sojt le bord, sojt un autre entjer
+                             M[i+decalage+1][j] = M[i+decalage][j];
+                            M[i+decalage][j] = 0;
+                            decalage++ ;
+                        }
+
+
+                    }
+
+                    if (i+decalage+1 <= 3) {
+                    if (M[i+decalage][j] == M[i+decalage+1][j] && M[i+decalage][j] !=0 ) {
+                        diff = true;
+                        M[i+decalage+1][j] = 2*M[i+decalage+1][j] ;
+                        M[i+decalage][j] = 0 ;
+                        score = score + M[i+decalage+1][j]   ;
+                    }
+                    }
+              }
+        }
+    }
+   if(diff==1){
+        nvelle_case();
+        decalage() ;
+   }
+   if(perdu()){
+       texte_perdu="Vous avez perdu";
+   }else{
+       texte_perdu=" ";
+   }
+   cptChanged();
+}
+
+
+
 void tableau::nvelle_case() {
     vector<int> t;   // vecteur t des cases libres
     for(int i=0; i<16;i++){
@@ -339,6 +356,11 @@ QString tableau::readScore(){
 QString tableau::readText(){
     return QString::fromStdString(texte_perdu);
 }
+
+QString tableau::readRetours(){
+    return ("retours :" + QString::number(ret_dispos));
+}
+
 
 QList<QString> tableau::readColor(){
     QList<QString> L ;
@@ -392,3 +414,64 @@ QList<QString> tableau::readColorText(){
 }
 
 
+void tableau::decalage() {
+
+    if (ret_dispos <5){
+        ret_dispos = ret_dispos+1 ;
+    }
+
+        for(int ind = ret_dispos - 2  ; ind > -1 ; ind--){
+         // H[ind+1] =  H[ind];
+            for (int i=0; i<4; i++){
+                for (int j=0; j<4; j++){
+                    H[ind+1][i][j] =  H[ind][i][j];
+                }
+            }
+
+       score_H[ind+1] = score_H[ind] ;
+
+       // on ne fait pas T[0] = M ;   car modifier M reviendra a modifier T
+    }
+
+    for (int i=0; i<4; i++){
+        for (int j=0; j<4; j++){
+            H[0][i][j] = M[i][j];
+               }
+    }
+
+
+    score_H[0] = score ;
+}
+
+
+
+
+
+void tableau::retour()
+{
+    if (ret_dispos>0) {
+        cout<<"ret_dispos : "<<ret_dispos<<endl ;
+
+
+        for (int i=0; i<4; i++){
+            for (int j=0; j<4; j++)
+                   M[i][j] = H[1][i][j] ;
+        }
+        score = score_H[0] ;
+
+        for(int ind = 0 ; ind < ret_dispos-1 ; ind ++){
+
+            // H[ind] =  H[ind+1];
+            for (int i=0; i<4; i++){
+                for (int j=0; j<4; j++)
+                    H[ind][i][j] =  H[ind+1][i][j];
+            }
+
+            score_H[ind] = score_H[ind+1] ;
+        }
+        ret_dispos = ret_dispos-1 ;
+
+    }
+    cptChanged();
+    // else : do nothing
+}
