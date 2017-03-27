@@ -80,7 +80,7 @@ void tableau::gauche(){
    if(diff==1){
        nvelle_case();
    }
-   if(perdu()){
+   if(perdu()==1){
        texte_perdu="Vous avez perdu";
    }else{
        texte_perdu=" ";
@@ -122,7 +122,7 @@ void tableau::droite(){
    if(diff==1){
         nvelle_case();
    }
-   if(perdu()){
+   if(perdu()==1){
        texte_perdu="Vous avez perdu";
    }else{
        texte_perdu=" ";
@@ -165,7 +165,7 @@ void tableau::haut(){
     if(diff==1){
         nvelle_case();
     }
-    if(perdu()){
+    if(perdu()==1){
         texte_perdu="Vous avez perdu";
     }else{
         texte_perdu=" ";
@@ -207,7 +207,7 @@ void tableau::bas(){
    if(diff==1){
         nvelle_case();
    }
-   if(perdu()){
+   if(perdu()==1){
        texte_perdu="Vous avez perdu";
    }else{
        texte_perdu=" ";
@@ -216,40 +216,79 @@ void tableau::bas(){
 }
 
 bool tableau::perdu(){
-    bool perdu=false;
-    for (int i=1;i<3;i++){
-        for (int j=1;j<3;j++){
-            if ((M[i][j]!=0)&&(M[i-1][j]!=M[i][j])&&(M[i+1][j]!=M[i][j])&&(M[i][j-1]!=M[i][j])&&(M[i][j+1]!=M[i][j])){
-                perdu=true;
+    bool interieur=false;
+    bool bord=false;
+    bool coin_1=false;
+    bool coin_2=false;
+    bool coin_3=false;
+    bool coin_4=false;
+    bool perdu;
+    bool aux=true;
+    int auxint=0;
+    int auxbords=0;
+    for (int i=0;i<4;i++){
+        for (int j=0;j<4;j++){
+            if (M[i][j]==0){
+                aux=false;
             }
         }
     }
-    for (int i=1;i<3;i++){
-        if ((M[i][0]!=0)&&(M[i][0]!=M[i][1])&&(M[i][0]!=M[i+1][0])&&(M[i-1][0]!=M[i+1][0])){
-            perdu=true;
+    if (aux){
+        for (int i=1;i<3;i++){
+            for (int j=1;j<3;j++){
+                if ((M[i-1][j]!=M[i][j])&&(M[i+1][j]!=M[i][j])&&(M[i][j-1]!=M[i][j])&&(M[i][j+1]!=M[i][j])){
+                    auxint=auxint+1;
+                }
+            }
         }
-        else if ((M[i][3]!=0)&&(M[i][3]!=M[i][2])&&(M[i][3]!=M[i+1][3])&&(M[i-1][3]!=M[i-1][3])){
-            perdu=true;
+        if (auxint==4){
+            interieur=true;
+            cout<<"interieur"<<endl;
         }
-        else if ((M[0][i]!=0)&&(M[0][i]!=M[1][i])&&(M[0][i]!=M[0][i+1])&&(M[0][i]!=M[0][i-1])){
-            perdu=true;
+        for (int i=1;i<3;i++){
+            if ((M[i][0]!=M[i][1])&&(M[i][0]!=M[i+1][0])&&(M[i][0]!=M[i+1][0])){
+                auxbords=auxbords+1;
+                cout<<"bord gauche"<<endl;
+            }
+            if ((M[i][3]!=M[i][2])&&(M[i][3]!=M[i+1][3])&&(M[i][3]!=M[i-1][3])){
+                auxbords=auxbords+1;
+                cout<<"bord droit"<<endl;
+            }
+            if ((M[0][i]!=M[1][i])&&(M[0][i]!=M[0][i+1])&&(M[0][i]!=M[0][i-1])){
+                auxbords=auxbords+1;
+                cout<<"bord haut"<<endl;
+            }
+            if ((M[3][i]!=M[2][i])&&(M[3][i]!=M[3][i+1])&&(M[3][i]!=M[3][i-1])){
+                auxbords=auxbords+1;
+                cout<<"bord bas"<<endl;
+            }
         }
-        else if ((M[3][i]!=0)&&(M[3][i]!=M[2][i])&&(M[3][i]!=M[3][i+1])&&(M[3][i]!=M[3][i-1])){
-            perdu=true;
+        if (auxbords==8){
+            bord=true;
+        }
+        if ((M[0][0]!=M[1][0])&&(M[0][0]!=M[0][1])){
+            coin_1=true;
+            cout<<"coin 1"<<endl;
+        }
+        if ((M[0][3]!=0)&&(M[0][3]!=M[1][3])&&(M[0][3]!=M[0][2])){
+            coin_2=true;
+            cout<<"coin 2"<<endl;
+        }
+        if ((M[3][0]!=M[3][1])&&(M[3][0]!=M[2][0])){
+            coin_3=true;
+            cout<<"coin 3"<<endl;
+        }
+        if ((M[3][3]!=M[2][3])&&(M[3][3]!=M[3][2])){
+            coin_4=true;
+            cout<<"coin 4"<<endl;
         }
     }
-    if ((M[0][0]!=0)&&(M[0][0]!=M[1][0])&&(M[0][0]!=M[0][1])){
+    if (interieur&&bord&&coin_1&&coin_2&&coin_3&&coin_4){
         perdu=true;
+    }else {
+        perdu=false;
     }
-    else if ((M[0][3]!=0)&&(M[0][3]!=M[1][3])&&(M[0][3]!=M[0][2])){
-        perdu=true;
-    }
-    else if ((M[3][0]!=0)&&(M[3][0]!=M[3][1])&&(M[3][0]!=M[2][0])){
-        perdu=true;
-    }
-    else if ((M[3][3]!=0)&&(M[3][3]!=M[2][3])&&(M[3][3]!=M[3][2])){
-        perdu=true;
-    }
+    cout<<perdu<<endl;
     return perdu;
 }
 
